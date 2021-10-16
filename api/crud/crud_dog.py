@@ -1,16 +1,21 @@
+from datetime import datetime
 from sqlalchemy.orm import Session
 from models import dog as dog_model
 from schemas import dog as dog_schema
 
+
 def get_dog(name: str, db: Session):
+    """get dog with the name"""
     return db.query(dog_model.Dog).filter(dog_model.Dog.name == name).first()
 
 
 def get_dogs(db: Session):
+    """get all dogs"""
     return db.query(dog_model.Dog).all()
 
 
 def create_dog(db: Session, dog: dog_schema.DogCreate):
+    """create a dog"""
     db_dog = dog_model.Dog(
         name=dog.name,
         picture=dog.picture,
@@ -21,6 +26,7 @@ def create_dog(db: Session, dog: dog_schema.DogCreate):
         db.add(db_dog)
         db.commit()
         db.refresh(db_dog)
-    except:
-        return {"message": "Internal server Error"}
-    return {"message": "OK"}
+
+        return {"message": "Dog is Created!"}
+    except Exception as e:
+        return {"message": "Internal server Error -- Error: {} ---".format(e)}

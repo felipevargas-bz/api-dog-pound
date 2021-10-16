@@ -21,6 +21,7 @@ from utils.get_picture import get_picture
 
 router = APIRouter()
 
+
 # Dependency
 def get_db():
     db = SessionLocal()
@@ -31,14 +32,21 @@ def get_db():
 
 
 @router.get(
-    "/api/dogs", response_model=List[dog_schema.Dog], status_code=200)
+    "/api/dogs",
+    response_model=List[dog_schema.Dog],
+    status_code=200
+)
 async def get_dogs(db: Session = Depends(get_db)):
     """Get a list of all dogs"""
     dogs = crud_dog.get_dogs(db)
     return dogs
 
 
-@router.get("/api/dogs/is_adopted", response_model=List[dog_schema.Dog], status_code=200)
+@router.get(
+    "/api/dogs/is_adopted",
+    response_model=List[dog_schema.Dog],
+    status_code=200
+)
 async def dogs_is_adopted(db: Session = Depends(get_db)):
     """Get all inputs (dogs) where the is_adopted flag is >> True."""
     dogs = crud_dog.get_dogs(db)
@@ -50,7 +58,11 @@ async def dogs_is_adopted(db: Session = Depends(get_db)):
 
 
 @router.put("/api/dogs/{name}")
-async def update_dog(name: str, dog: dog_schema.Dog, db: Session = Depends(get_db)):
+async def update_dog(
+    name: str,
+    dog: dog_schema.Dog,
+    db: Session = Depends(get_db)
+):
     """Update a record (dog) by name"""
     dog_update = db.query(dog_model.Dog).filter(
         dog_model.Dog.name == name).first()

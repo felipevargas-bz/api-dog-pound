@@ -1,5 +1,6 @@
 from sqlalchemy import Column
-from sqlalchemy.sql.sqltypes import VARCHAR, Boolean, DateTime, Integer, String
+from datetime import datetime
+from sqlalchemy.sql.sqltypes import Boolean, DateTime, Integer, String
 from internal.admin import Base
 
 
@@ -12,4 +13,4 @@ class Dog(Base):
     name = Column(String(50), unique=True)
     picture = Column(String(500))
     is_adopted = Column(Boolean)
-    create_date = Column(DateTime)
+    create_date = Column(String(30))
