@@ -17,6 +17,7 @@ from models import dog as dog_model
 from crud import crud_dog
 from internal.admin import SessionLocal
 from utils.get_picture import get_picture
+from datetime import datetime
 
 
 router = APIRouter()
@@ -64,13 +65,15 @@ async def update_dog(
     db: Session = Depends(get_db)
 ):
     """Update a record (dog) by name"""
-    dog_update = db.query(dog_model.Dog).filter(
-        dog_model.Dog.name == name).first()
+    dog_update = db.query(dog_model.Dog)\
+        .filter(dog_model.Dog.name == name)\
+        .first()
     if not dog_update:
         raise HTTPException(status_code=404, detail="Dog not found")
 
     dog_update.name = dog.name
-    dog_update.description = dog.is_adopted
+    dog_update.is_adopted = dog.is_adopted
+    dog_update.update_date = datetime.now().strftime('%b %dth, %Y - %H:%M hrs')
 
     db.commit()
 
@@ -90,7 +93,7 @@ async def delete_dog(name: str, db: Session = Depends(get_db)):
 
 
 @router.post("/api/dogs/{name}", status_code=201)
-async def post_dogs(
+async def create_dog(
     *,
     name: str,
     dog: dog_schema.DogCreate,

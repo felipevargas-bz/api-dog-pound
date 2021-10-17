@@ -2,24 +2,21 @@ from pydantic import BaseModel
 from datetime import datetime
 
 
-class DogBase(BaseModel):
-    """schema for dog model"""
+class UserBase(BaseModel):
+    """schema for user model"""
 
     name: str
-    picture: str
-    is_adopted: bool
+    last_name: str
+    email: str
     create_date: str = datetime.now().strftime('%b %dth, %Y - %H:%M hrs')
     update_date: str = create_date
 
-
-class DogCreate(DogBase):
+class UserCreate(UserBase):
     pass
 
-
-class Dog(DogBase):
+class User(UserBase):
     """..."""
     id: int
-    id_user: int
 
     class Config:
         orm_mode = True

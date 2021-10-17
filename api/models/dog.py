@@ -1,7 +1,8 @@
-from sqlalchemy import Column
-from datetime import datetime
-from sqlalchemy.sql.sqltypes import Boolean, DateTime, Integer, String
+from sqlalchemy import Column, Boolean, Integer, String
+from sqlalchemy.orm import backref, relationship
+from sqlalchemy.sql.schema import ForeignKey
 from internal.admin import Base
+from models.user import User
 
 
 class Dog(Base):
@@ -14,3 +15,7 @@ class Dog(Base):
     picture = Column(String(500))
     is_adopted = Column(Boolean)
     create_date = Column(String(30))
+    update_date = Column(String(30))
+    id_user = Column(Integer)
+
+    # owner = relationship("User", back_populates="dog")

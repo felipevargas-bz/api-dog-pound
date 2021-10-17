@@ -1,4 +1,3 @@
-from datetime import datetime
 from sqlalchemy.orm import Session
 from models import dog as dog_model
 from schemas import dog as dog_schema
