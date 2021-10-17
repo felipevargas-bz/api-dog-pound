@@ -8,6 +8,7 @@ class DogBase(BaseModel):
     name: str
     picture: str
     is_adopted: bool
+    id_user: int
     create_date: str = datetime.now().strftime('%b %dth, %Y - %H:%M hrs')
     update_date: str = create_date
 
@@ -19,7 +20,6 @@ class DogCreate(DogBase):
 class Dog(DogBase):
     """..."""
     id: int
-    id_user: int
 
     class Config:
         orm_mode = True

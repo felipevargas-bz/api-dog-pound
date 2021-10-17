@@ -19,7 +19,9 @@ def create_dog(db: Session, dog: dog_schema.DogCreate):
         name=dog.name,
         picture=dog.picture,
         is_adopted=dog.is_adopted,
-        create_date=dog.create_date
+        id_user=dog.id_user,
+        create_date=dog.create_date,
+        update_date=dog.create_date
     )
     try:
         db.add(db_dog)

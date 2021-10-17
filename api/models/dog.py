@@ -16,6 +16,6 @@ class Dog(Base):
     is_adopted = Column(Boolean)
     create_date = Column(String(30))
     update_date = Column(String(30))
-    id_user = Column(Integer)
+    id_user = Column(Integer, ForeignKey('users.id'))
 
-    # owner = relationship("User", back_populates="dog")
+    owner = relationship("User", back_populates="dog")
