@@ -11,4 +11,4 @@ if __name__ == "__main__":
     app.include_router(dog_router)
     app.include_router(user_router)
 
-    uvicorn.run(app, host="0.0.0.0", port=8000, debug=True)
+    uvicorn.run(app, host="0.0.0.0", port=8000)
