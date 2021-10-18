@@ -15,4 +15,8 @@ class User(Base):
     create_date = Column(String(30))
     update_date = Column(String(30))
 
-    dog = relationship("Dog", back_populates="owner", cascade="all, delete-orphan")
+    dog = relationship(
+        "Dog",
+        back_populates="owner",
+        cascade="all, delete-orphan"
+    )

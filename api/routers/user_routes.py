@@ -16,6 +16,7 @@ from fastapi import Depends, HTTPException
 from sqlalchemy.orm import Session
 from schemas import user as user_schema
 from models import user as user_model
+from models import dog as dog_model
 from crud import crud_user
 from internal.admin import SessionLocal
 from datetime import datetime
@@ -53,16 +54,20 @@ async def get_user(
     return crud_user.get_user(user_email=user_email, db=db)
 
 
-# @router.get("/api/users/dogs/{user_email}")
-# async def user_dogs(user_email: str):
-#     """Get all the dogs of an user"""
-#     pass
+@router.get("/api/users/dogs/{user_email}")
+async def user_dogs(user_email: str, db: Session = Depends(get_db)):
+    """Get all the dogs of an user"""
 
+    user_dogs: List = []
+    user = crud_user.get_user(user_email=user_email, db=db)
+    dogs = db.query(dog_model.Dog).all()
 
-# @router.get("/api/users/dogs/{dog_name}")
-# async def user_dog(dog_name: str, user_email: str):
-#     """get a dog from a user by email"""
-#     pass
+    for dog in dogs:
+        if dog.id_user == user.id:
+            user_dogs.append(dog)
+    if user_dogs == []:
+        return {"message": "The user does not have any registered dogs."}
+    return user_dogs
 
 
 @router.post("/api/users/{user_email}")
@@ -87,11 +92,17 @@ async def update_user(
         .filter(user_model.User.email == user_email)\
         .first()
     if not user_update:
-        raise HTTPException(status_code=404, detail="User not found")
-    user_update.name=user.name
-    user_update.last_name=user.last_name
-    user_update.email=user.email
-    user_update.update_date = datetime.now().strftime('%b %dth, %Y - %H:%M hrs')
+        raise HTTPException(
+            status_code=404,
+            detail="User not found"
+        )
+
+    user_update.name = user.name
+    user_update.last_name = user.last_name
+    user_update.email = user.email
+    user_update.update_date = datetime\
+        .now()\
+        .strftime('%b %dth, %Y - %H:%M hrs')
 
     db.commit()
 

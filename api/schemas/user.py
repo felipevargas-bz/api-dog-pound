@@ -11,8 +11,10 @@ class UserBase(BaseModel):
     create_date: str = datetime.now().strftime('%b %dth, %Y - %H:%M hrs')
     update_date: str = create_date
 
+
 class UserCreate(UserBase):
     pass
+
 
 class User(UserBase):
     """..."""
