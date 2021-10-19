@@ -1,0 +1,28 @@
+version: '3.3'
+
+services:
+    mysql:
+      image: mysql:5.7
+      container_name: mysql
+      environment:
+        - MYSQL_DATABASE=test_guane
+        - MYSQL_ROOT_PASSWORD=6232
+        - YSQL_ROOT_PASSWORD=root
+        - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+      ports:
+        - "3306:3306"
+      volumes:
+        - ./databases/mysql:/etc/mysql/conf.d
+      depends_on:
+        - backend
+    backend:
+      build:
+         context: ./DockerFilePython
+         dockerfile: Dockerfile
+      container_name: backpython
+      volumes:
+        - './api:/test_guane/api/'
+      #command: sh -c "while true; do sleep 1; done"
+      command: python3 /test_guane/api/main.py
+      ports:
+        - 8000:8000
