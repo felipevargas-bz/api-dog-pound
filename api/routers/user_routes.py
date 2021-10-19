@@ -19,7 +19,6 @@ from models import user as user_model
 from models import dog as dog_model
 from crud import crud_user
 from internal.admin import SessionLocal
-from datetime import datetime
 
 
 router = APIRouter()
@@ -88,25 +87,7 @@ async def update_user(
     db: Session = Depends(get_db)
 ):
     """update an user"""
-    user_update = db.query(user_model.User)\
-        .filter(user_model.User.email == user_email)\
-        .first()
-    if not user_update:
-        raise HTTPException(
-            status_code=404,
-            detail="User not found"
-        )
-
-    user_update.name = user.name
-    user_update.last_name = user.last_name
-    user_update.email = user.email
-    user_update.update_date = datetime\
-        .now()\
-        .strftime('%b %dth, %Y - %H:%M hrs')
-
-    db.commit()
-
-    return user_update
+    return crud_user.update_user(user_email=user_email, user=user, db=db)
 
 
 @router.delete("/api/users/{user_email}")
@@ -115,12 +96,4 @@ async def delete_user(
     db: Session = Depends(get_db)
 ):
     """delete user by email"""
-    user = db.query(user_model.User)\
-        .filter(user_model.User.email == user_email)\
-        .first()
-    if not user:
-        raise HTTPException(status_code=404, detail="User not found")
-
-    db.delete(user)
-    db.commit()
-    return {"message": 'User is deleted!'}
+    return crud_user.delete_user(user_email=user_email, db=db)

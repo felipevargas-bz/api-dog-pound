@@ -10,14 +10,12 @@ working with the scheme below.
 """
 from typing import List
 from fastapi import APIRouter
-from fastapi import Depends, HTTPException
+from fastapi import Depends
 from sqlalchemy.orm import Session
 from schemas import dog as dog_schema
-from models import dog as dog_model
 from crud import crud_dog
 from internal.admin import SessionLocal
 from utils.get_picture import get_picture
-from datetime import datetime
 
 
 router = APIRouter()
@@ -65,31 +63,13 @@ async def update_dog(
     db: Session = Depends(get_db)
 ):
     """Update a record (dog) by name"""
-    dog_update = db.query(dog_model.Dog)\
-        .filter(dog_model.Dog.name == name)\
-        .first()
-    if not dog_update:
-        raise HTTPException(status_code=404, detail="Dog not found")
-
-    dog_update.name = dog.name
-    dog_update.is_adopted = dog.is_adopted
-    dog_update.update_date = datetime.now().strftime('%b %dth, %Y - %H:%M hrs')
-
-    db.commit()
-
-    return dog_update
+    return crud_dog.update_dog(name=name, dog=dog, db=db)
 
 
 @router.delete("/api/dogs/{name}")
 async def delete_dog(name: str, db: Session = Depends(get_db)):
     """Delete a record (dog) by name."""
-    dog = db.query(dog_model.Dog).filter(dog_model.Dog.name == name).first()
-    if not dog:
-        raise HTTPException(status_code=404, detail="Dog not found")
-
-    db.delete(dog)
-    db.commit()
-    return {'message': 'Dog is deleted!'}
+    return crud_dog.delete_user(name=name, db=db)
 
 
 @router.post("/api/dogs/{name}", status_code=201)
