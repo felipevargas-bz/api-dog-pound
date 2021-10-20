@@ -34,14 +34,14 @@ This project is an api, thought to handle two entities, Dog and User, this proje
 This project consists of the following Endpoints:
 
 ### Endpoints for the Dog entity:
-
+```
 |          Dog          |
 |+ id: integer          |
 |+ name: String         |
 |+ picture: String      |
 |+ is_adopted: Boolean  |
 |+ create_date: Datetime|
-
+```
 * GET - "/api/dogs" > get a list of all dogs saved in the database.
 * GET - "/api/dogs/is_adopted" > get a list of all dogs whose is_adopted attribute is set to True.
 * GET - "/api/dogs/{name}" > Get a dog saved in the database by name.
@@ -53,7 +53,7 @@ This project consists of the following Endpoints:
 * DELETE - "/api/dogs/{name}" > delete a dog saved in the database by name.
 
 ### Endpoints for the User entity:
-
+```
 |User                   |
 |+ id: integer          |
 |+ name: String         |
@@ -61,6 +61,7 @@ This project consists of the following Endpoints:
 |+ email: String        |
 |+ update_date: String  |
 |+ create_date: String  |
+```
 
 * GET - "/api/users" > get a list of all users stored in the database.
 * GET - "/ api / users /{user_email}" > get a user stored in the database by email.
