@@ -54,7 +54,7 @@ This project consists of the following Endpoints:
 
 ### Endpoints for the User entity:
 ```
-|User                   |
+|         User          |
 |+ id: integer          |
 |+ name: String         |
 |+ last_name: String    |
