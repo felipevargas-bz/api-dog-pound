@@ -1,6 +1,6 @@
 # guane-intern-fastapi
 
-## Social media.. 
+#### Social media.. 
 
 <p align="center">
 &nbsp; <a href="https://twitter.com/felipevargas_bz" target="_blank" rel="noopener noreferrer"><img src="https://cdn.jsdelivr.net/npm/simple-icons@3.0.1/icons/twitter.svg" width="30" /></a>
