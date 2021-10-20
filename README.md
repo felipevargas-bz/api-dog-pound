@@ -61,7 +61,7 @@ If a user is deleted, all the dogs associated with that user are also deleted fr
 ### Built with
 The api was built with:
 
-* [Python](https://www.python.org/), [FastApi](https://fastapi.tiangolo.com/)
+* [Python](https://www.python.org/) > [FastApi](https://fastapi.tiangolo.com/)
 * [MySQL](https://www.mysql.com/)
 * [Docker](https://www.docker.com/)
 
@@ -81,9 +81,9 @@ Once the images are built, we start running our containers
 ``` sudo docker-compose up -d ```
 
 In order to see if all the containers were mounted correctly, we proceed as follows:
-``` docker-compose ps -a ```
+``` docker ps -a ```
 
 | Name           | Command                                      |  State                 | Ports                                                 |
 | :---           |     :---:                                    |          -----         |:---                                                   |
-| backpython     |  python3 python3 /test_guane/api/main.py     | up                     |  0.0.0.0:8000->8000/tcp, :::8000->8000/tcp            |
-| mysql          |  docker-entrypoint.sh mysql                  | up                     | 0.0.0.0:3306->3306/tcp, :::3306->3306/tcp, 33060/tcp  |
+| backpython     |  python3 /test_guane/api/main.py             | up                     |  0.0.0.0:8000->8000/tcp, :::8000->8000/tcp            |
+| mysql          |  docker-entrypoint.sh mysql                  | up                     |  0.0.0.0:3306->3306/tcp, :::3306->3306/tcp, 33060/tcp |
