@@ -1,7 +1,7 @@
 version: '3.3'
 
 services:
-    mysql:
+    dbmysql:
       image: mysql:5.7
       container_name: mysql
       environment:
@@ -13,8 +13,6 @@ services:
         - "3306:3306"
       volumes:
         - ./databases/mysql:/etc/mysql/conf.d
-      depends_on:
-        - backend
     backend:
       build:
          context: ./DockerFilePython

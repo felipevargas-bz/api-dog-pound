@@ -13,12 +13,18 @@ load_dotenv(dotenv_path=env_path)
 """
 SQLAlchemy configurations
 """
-SQLALCHEMY_DATABASE_URI = 'mysql://root:6232@mysql:3306/test_guane?charset=utf8'
+SQLALCHEMY_DATABASE_URI = 'mysql://{0}:{1}@{2}:{3}/{4}?charset=utf8'.format(
+    os.getenv("MYSQL_USER"),
+    os.getenv("MYSQL_PASSWORD"),
+    os.getenv("MYSQL_HOST"),
+    os.getenv("MYSQL_PORT"),
+    os.getenv("MYSQL_DATABASE")
+)
 
 app = FastAPI()
 
-
 engine = create_engine(SQLALCHEMY_DATABASE_URI)
+
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()
